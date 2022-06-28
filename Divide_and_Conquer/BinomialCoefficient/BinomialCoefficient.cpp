@@ -9,19 +9,35 @@ int A, B;
 long long int C = 1000000007;
 //long long int save[4000000][4000000] = { 0, };
 
+long long int Factorial(long long int num, long long int Val) {
+
+	long long int temp = 1;
+
+	for (int i = Val; i <= num; i++) {
+		temp = temp * i%C;
+	}
+
+	return temp;
+
+
+
+}
+
 long long int Devide(long long int num, long long int Val) {
 
 
 
-	if (Val == 0 || Val == num)return 1;
+	if (Val == 1)return num%C;
 
+	long long int tempVal = Devide(num, Val / 2)%C;
 
+	if (Val % 2 == 0) {
+		return (tempVal * tempVal)%C;
+	}
 
-	long long int num1 = Devide(num - 1, Val - 1) % C;
-	long long int num2 = Devide(num - 1, Val) % C;
-
-
-	return (num1 + num2)%C;
+	else {
+		return (tempVal * tempVal) % C * num % C;
+	}
 
 
 }
@@ -43,7 +59,9 @@ int main()
 
 
 
-	cout << Devide(A, B) << endl;
+
+
+	cout << Factorial(A,A-B+1)%C * Devide(Factorial(B,1), C-2)%C << endl;
 
 
 
