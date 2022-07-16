@@ -24,7 +24,6 @@ void Devide(vector<vector<int>> vecParts) {
 	bool checkSame = true;
 	int firstColor = vecParts[0][0];
 
-	//cout << vecParts.size() << endl;
 
 	for (int i = 0; i < vecParts.size(); i++) {
 		if (checkSame == false)break;
@@ -39,8 +38,6 @@ void Devide(vector<vector<int>> vecParts) {
 		}
 
 	}
-
-
 
 
 	if (checkSame == true) {
@@ -81,16 +78,12 @@ void Devide(vector<vector<int>> vecParts) {
 				size2 = vecParts.size() / 2;
 				end2 = vecParts.size();
 			}
-			//cout << w << endl;
 
 			vector<vector<int>> vecAll;
 
 			for (int i = size1; i < end1; i++) {
 				vector<int> vecTemp;
 				for (int k = size2; k < end2; k++) {
-
-					//cout << 1 << endl;
-
 					vecTemp.push_back(vecParts[i][k]);
 					
 				}
@@ -103,8 +96,6 @@ void Devide(vector<vector<int>> vecParts) {
 		return;
 		
 	}
-
-	
 
 }
 
@@ -126,25 +117,15 @@ int main()
 			int temp;
 			cin >> temp;
 			vecTemp.push_back(temp);
-
 		}
 		vecAll.push_back(vecTemp);
 	}
-	//asfd
-	//cout << vecAll.size() << endl;
 
 	Devide(vecAll);
 
 	cout << cntBlack << endl;
 	cout << cntWhite << endl;
 	
-
-
-
-
-
-
-
 
 }
 
