@@ -17,10 +17,10 @@ int lineStoreArray[500001];
 
 int Calculate(int n)
 {
-	int midKey, Left = 1, Right = lineStoreArray[N - 1];
-	int cntNum = 0;
+	long long midKey, Left = 1, Right = lineStoreArray[N - 1];
+	long long cntNum = 0;
 	midKey = (Left + Right) / 2;
-	int ans = 0;
+	long long ans = 0;
 	while (Left <= Right)
 	{
 		
