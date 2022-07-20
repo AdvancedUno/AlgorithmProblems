@@ -8,7 +8,7 @@ using namespace std;
 long long N, K;
 
 
-long long lineStoreArray[100001];
+long long lineStoreArray[1000001];
 
 
 
