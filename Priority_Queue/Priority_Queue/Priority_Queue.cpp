@@ -8,9 +8,45 @@ using namespace std;
 long long N, K;
 
 
-long long lineStoreArray[100001];
+long long lineStoreArray[100002];
 
-void DeleteMaxHeap() {
+void DeleteMaxHeap(int currentIdx) {
+
+	cout << lineStoreArray[1] << endl;
+	lineStoreArray[1] = lineStoreArray[currentIdx];
+
+
+	
+
+	int parent = 1;
+	int child;
+
+	for (int i = 1; i < currentIdx; i++) {
+
+
+		child = parent * 2;
+
+		
+		if (child + 1 < currentIdx && lineStoreArray[child] < lineStoreArray[child+1]) {
+			child++;
+		}
+
+		if (lineStoreArray[parent] < lineStoreArray[child]) {
+			int temp = lineStoreArray[child];
+			lineStoreArray[child] = lineStoreArray[parent];
+			lineStoreArray[parent] = temp;
+			parent = child;
+		}
+		else {
+			break;
+		}
+
+
+
+
+	}
+
+
 
 
 
@@ -19,20 +55,20 @@ void DeleteMaxHeap() {
 
 void InsertMaxHeap(int n, int currentIdx)
 {
+
 	lineStoreArray[currentIdx] = n;
 
 
-	for (int i = currentIdx; i > 1; i=i/2) {
+	for (int i = currentIdx; i > 1; i/=2) {
 
 		if (lineStoreArray[i] > lineStoreArray[i / 2]) {
 			
 			int temp = lineStoreArray[i / 2];
-			//cout << lineStoreArray[i] << " " << temp << endl;
 			lineStoreArray[i / 2] = lineStoreArray[i];
 			lineStoreArray[i] = temp;
 		}
 		else {
-			cout << lineStoreArray[i] << " " << lineStoreArray[i / 2] << endl;
+			
 			break;
 		}
 
@@ -52,35 +88,32 @@ int main(void)
 	cin >> N;
 	//cin >> K;
 	int numberTemp;
-	int currentIdx = 1;
+	int currentIdx = 0;
 	for (long long i = 0; i < N; i++) {
 		cin >> numberTemp;
 		if (numberTemp == 0) {
-			DeleteMaxHeap();
-			if (currentIdx > 1) {
+			
+			if (currentIdx > 0) {
+				
+				DeleteMaxHeap(currentIdx);
 				currentIdx--;
 			}
+			else {
+				cout <<  0 << "\n";
+			}
+			
+
 		}
 		else {
-			InsertMaxHeap(numberTemp, currentIdx);
 			currentIdx++;
+			InsertMaxHeap(numberTemp, currentIdx);
+			
 		}
 		
 
 	}
 
 
-	for (int i =1; i < N+1; i++) {
-		cout << lineStoreArray[i] << endl;
-	}
-		
-		
-
-	//sort(lineStoreArray, lineStoreArray + N);
-
-
-
-	//cout << Calculate(K);
 
 	return 0;
 }
