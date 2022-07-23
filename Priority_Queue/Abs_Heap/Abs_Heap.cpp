@@ -30,7 +30,7 @@ void DeleteAbsHeap(int currentIdx) {
 		if (child + 1 < currentIdx && abs(lineStoreArray[child]) > abs(lineStoreArray[child + 1])) {
 			child++;
 		}
-		else if (child + 1 < currentIdx && abs(lineStoreArray[child]) > abs(lineStoreArray[child + 1])) {
+		else if (child + 1 < currentIdx && abs(lineStoreArray[child]) == abs(lineStoreArray[child + 1])) {
 
 			if (lineStoreArray[child] > lineStoreArray[child + 1]) {
 				child++;
@@ -44,7 +44,7 @@ void DeleteAbsHeap(int currentIdx) {
 			lineStoreArray[parent] = temp;
 			parent = child;
 		}
-		else if (child < currentIdx && abs(lineStoreArray[i]) == abs(lineStoreArray[i / 2]) && lineStoreArray[i] > lineStoreArray[i / 2]) {
+		else if (child < currentIdx && abs(lineStoreArray[parent]) == abs(lineStoreArray[child]) && lineStoreArray[parent] > lineStoreArray[child]) {
 			int temp = lineStoreArray[child];
 			lineStoreArray[child] = lineStoreArray[parent];
 			lineStoreArray[parent] = temp;
