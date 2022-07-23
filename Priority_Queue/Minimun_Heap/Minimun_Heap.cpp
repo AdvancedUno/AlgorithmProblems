@@ -5,14 +5,14 @@
 
 using namespace std;
 
-long long N, K;
+long long N;
 
 
 long long lineStoreArray[100002];
 
 void DeleteMaxHeap(int currentIdx) {
 
-	cout << " aa " << lineStoreArray[1] << "\n";
+	cout << lineStoreArray[1] << "\n";
 	lineStoreArray[1] = lineStoreArray[currentIdx];
 
 
@@ -86,7 +86,6 @@ int main(void)
 	ios::sync_with_stdio(false);
 
 	cin >> N;
-	//cin >> K;
 	int numberTemp;
 	int currentIdx = 0;
 	for (long long i = 0; i < N; i++) {
@@ -99,7 +98,7 @@ int main(void)
 				currentIdx--;
 			}
 			else {
-				cout << " aa " <<  0 << "\n";
+				cout <<  0 << "\n";
 			}
 
 
