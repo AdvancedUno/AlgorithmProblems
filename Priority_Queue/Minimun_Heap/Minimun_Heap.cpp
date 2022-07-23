@@ -10,7 +10,7 @@ long long N;
 
 long long lineStoreArray[100002];
 
-void DeleteMaxHeap(int currentIdx) {
+void DeleteMinHeap(int currentIdx) {
 
 	cout << lineStoreArray[1] << "\n";
 	lineStoreArray[1] = lineStoreArray[currentIdx];
@@ -53,7 +53,7 @@ void DeleteMaxHeap(int currentIdx) {
 
 }
 
-void InsertMaxHeap(int n, int currentIdx)
+void InsertMinHeap(int n, int currentIdx)
 {
 
 	lineStoreArray[currentIdx] = n;
@@ -94,7 +94,7 @@ int main(void)
 
 			if (currentIdx > 0) {
 
-				DeleteMaxHeap(currentIdx);
+				DeleteMinHeap(currentIdx);
 				currentIdx--;
 			}
 			else {
@@ -105,7 +105,7 @@ int main(void)
 		}
 		else {
 			currentIdx++;
-			InsertMaxHeap(numberTemp, currentIdx);
+			InsertMinHeap(numberTemp, currentIdx);
 
 		}
 
