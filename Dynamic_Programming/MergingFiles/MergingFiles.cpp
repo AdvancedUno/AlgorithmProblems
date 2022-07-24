@@ -1,20 +1,78 @@
-﻿// MergingFiles.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
+﻿#include <iostream>
+#include <math.h> 
+#include <algorithm>
+#include <vector>
 
-#include <iostream>
+using namespace std;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+int N, K;
+
+
+int iStoreDPArray[501][501];
+int iStoreNumArray[501];
+int iStoreSumArray[501];
+
+
+int Merge(int iStart, int iEnd) {
+
+
+	if (iStoreDPArray[iStart][iEnd] != 0x3f3f3f3f) {
+		return iStoreDPArray[iStart][iEnd];
+	}
+
+	if (iStart == iEnd) {
+		iStoreDPArray[iStart][iEnd] = 0;
+		return iStoreDPArray[iStart][iEnd];
+	}
+
+	if (iEnd - iStart == 1) {
+		iStoreDPArray[iStart][iEnd] = iStoreNumArray[iStart] + iStoreNumArray[iEnd];
+		return iStoreDPArray[iStart][iEnd];
+	}
+
+
+
+	for (int iMidNum = 0; iMidNum < iEnd - iStart; iMidNum++) {
+		int iLeftMin = Merge(iStart, iStart + iMidNum);
+		int iRightMin = Merge(iStart + iMidNum + 1, iEnd);
+
+		iStoreDPArray[iStart][iEnd] = min(iStoreDPArray[iStart][iEnd], iLeftMin + iRightMin );
+
+	}
+
+
+	return iStoreDPArray[iStart][iEnd] += iStoreSumArray[iEnd] - iStoreSumArray[iStart - 1];
 }
 
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
 
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
+
+
+
+int main(void)
+{
+	cin.tie(NULL);
+	ios::sync_with_stdio(false);
+
+	cin >> N;
+
+	for (int i = 0; i < N; i++) {
+
+		cin >> K;
+		memset(iStoreDPArray, 0x3f, sizeof(iStoreDPArray));
+		for (int k = 1; k <= K; k++) {
+			cin >> iStoreNumArray[k];
+			iStoreSumArray[k] = iStoreNumArray[k] + iStoreSumArray[k-1];
+		}
+		cout << Merge(1, K) << endl;
+	}
+
+	
+
+
+	return 0;
+}
+
+
+
+
+
