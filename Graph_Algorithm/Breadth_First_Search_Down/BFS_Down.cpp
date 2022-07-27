@@ -24,18 +24,12 @@ bool cmp(int a, int b) {
 
 void BFS(int iWantedNode) {
 
-
-
 	if (bCheckVisitedArray[iWantedNode] == 1) {
 		return;
 	}
-
 	for (int i = 0; i < iStoreConnectionArray[iWantedNode].size(); i++) {
 		qSaveCount.push(iStoreConnectionArray[iWantedNode][i]);
 	}
-
-
-
 	bCheckVisitedArray[iWantedNode] = 1;
 	cnt++;
 	bResultArray[iWantedNode] = cnt;
