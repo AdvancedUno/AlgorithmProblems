@@ -10,9 +10,9 @@
 using namespace std;
 
 int N, iNumConnection, iStartNode;
-vector<int> iStoreConnectionArray[100001];
-int bCheckVisitedArray[100001] = { 0, };
-int bResultArray[100001] = { 0, };
+vector<int> iStoreConnectionArray[10001];
+int bCheckVisitedArray[10001] = { 0, };
+int bResultArray[10001] = { 0, };
 int cnt = 0;
 
 
@@ -41,9 +41,9 @@ int main(void)
 		iStoreConnectionArray[tempB].push_back(tempA);
 		iStoreConnectionArray[tempA].push_back(tempB);
 	}
-	//for (int i = 1; i <= N; i++) {
-	//	sort(iStoreConnectionArray[i].begin(), iStoreConnectionArray[i].end(), cmp);
-	//}
+	/*for (int i = 1; i <= N; i++) {
+		sort(iStoreConnectionArray[i].begin(), iStoreConnectionArray[i].end(),);
+	}*/
 
 	iStartNode = 1;
 
