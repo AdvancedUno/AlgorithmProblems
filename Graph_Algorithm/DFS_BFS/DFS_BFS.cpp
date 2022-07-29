@@ -83,17 +83,5 @@ int main(void)
 
 	DFS(iStartNode);
 	BFS(iStartNode);
-
-	int iCntVirusInfected = 0;
-
 	
-
-	for (int i = 1; i <= N; i++) {
-		//printf("%d\n", iResultArrayDFS[i]);
-	}
-
-	for (int i = 1; i <= N; i++) {
-		//printf("%d\n", iResultArrayBFS[i]);
-	}
-
 }
