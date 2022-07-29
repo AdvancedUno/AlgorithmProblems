@@ -12,7 +12,6 @@ using namespace std;
 int N, iNumConnection, iStartNodeFirst, iStartNodeSecond;
 vector<int> iStoreConnectionArray[26];
 int bCheckVisitedArray[26][26];
-int iSaveResultArray[100001];
 vector<int> bResultVector;
 int iCntIndex = 0;
 int iNumBlocks = 0;
@@ -62,9 +61,10 @@ int main(void)
 	ios::sync_with_stdio(false);
 	cin >> N;
 	for (int i = 0; i < N; i++) {
+		int tempA;
+		cin >> tempA;
 		for (int j = 0; j < N; j++) {
-			int tempA;
-			cin >> tempA;
+			int iWantNum = tempA % 10;
 			iStoreConnectionArray[i].push_back(tempA);
 		}
 	}
