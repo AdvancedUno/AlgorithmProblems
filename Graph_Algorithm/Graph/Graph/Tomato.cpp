@@ -25,20 +25,11 @@ int iDirectionListSecond[4] = { 0,1,0,-1 };
 
 
 void BFS(vector<pair<int, int>> OneBoxPosList) {
-
-
 	if (OneBoxPosList.size() < 1) {
 		return;
 	}
-
-
 	vector<pair<int, int>> vectorSaveOneBoxPosList;
-
 	for (int num = 0; num < OneBoxPosList.size(); num++) {
-		//bCheckVisitedArray[OneBoxPosList[num].first][OneBoxPosList[num].second] = 1;
-		//cout << OneBoxPosList[num].first << "  " << OneBoxPosList[num].second << endl;
-		//cout << iStoreConnectionArray[OneBoxPosList[num].first][OneBoxPosList[num].second] << endl;
-		
 		for (int i = 0; i < 4; i++) {
 			
 			int iHMove = OneBoxPosList[num].first + iDirectionListFirst[i];
@@ -47,27 +38,15 @@ void BFS(vector<pair<int, int>> OneBoxPosList) {
 			if (bCheckVisitedArray[iHMove][iVMove] == 0 && iStoreConnectionArray[iHMove][iVMove] == 0) {
 				bCheckVisitedArray[iHMove][iVMove] = bCheckVisitedArray[OneBoxPosList[num].first][OneBoxPosList[num].second] + 1;
 				vectorSaveOneBoxPosList.push_back(make_pair(iHMove, iVMove));
-
 				iCntTotal++;
 			}
-
 		}
-		//bCheckVisitedArray[OneBoxPosList[num].first][OneBoxPosList[num].second] = 1;
 	}
-
 	if (vectorSaveOneBoxPosList.size() > 0) {
 		iNumLevel++;
 		BFS(vectorSaveOneBoxPosList);
 	}
-	
 }
-
-
-
-
-
-
-
 
 int main(void)
 {
@@ -90,7 +69,6 @@ int main(void)
 			}
 		}
 	}
-
 	BFS(iSaveOneBoxPosList);
 
 	int iResult = 0;
@@ -110,9 +88,5 @@ int main(void)
 		}
 	}
 
-
-
-
 	printf("%d\n", iResult-1);
-
 }
