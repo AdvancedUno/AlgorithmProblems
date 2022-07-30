@@ -10,8 +10,8 @@
 using namespace std;
 
 int N, Rows, iStartNodeFirst, iStartNodeSecond;
-vector<int> iStoreConnectionArray[26];
-int bCheckVisitedArray[26][26];
+int iStoreConnectionArray[1001][1001];
+int bCheckVisitedArray[1001][1001];
 vector<int> bResultVector;
 vector<pair<int, int>> bWantResultVector;
 int iCntIndex = 0;
@@ -30,30 +30,29 @@ void BFS(vector<pair<int, int>> OneBoxPosList) {
 	if (OneBoxPosList.size() < 1) {
 		return;
 	}
-	
-
 
 
 	vector<pair<int, int>> vectorSaveOneBoxPosList;
 
 	for (int num = 0; num < OneBoxPosList.size(); num++) {
-		bCheckVisitedArray[OneBoxPosList[num].first][OneBoxPosList[num].second] = 1;
+		//bCheckVisitedArray[OneBoxPosList[num].first][OneBoxPosList[num].second] = 1;
 		//cout << OneBoxPosList[num].first << "  " << OneBoxPosList[num].second << endl;
+		//cout << iStoreConnectionArray[OneBoxPosList[num].first][OneBoxPosList[num].second] << endl;
 		
 		for (int i = 0; i < 4; i++) {
-
+			
 			int iHMove = OneBoxPosList[num].first + iDirectionListFirst[i];
 			int iVMove = OneBoxPosList[num].second + iDirectionListSecond[i];
-			if (iHMove >= N || iHMove < 0 || iVMove >= Rows || iVMove < 0) continue;
+			if (iHMove >= Rows || iHMove < 0 || iVMove >= N || iVMove < 0) continue;
 			if (bCheckVisitedArray[iHMove][iVMove] == 0 && iStoreConnectionArray[iHMove][iVMove] == 0) {
-				bCheckVisitedArray[iHMove][iVMove] = 1;
+				bCheckVisitedArray[iHMove][iVMove] = bCheckVisitedArray[OneBoxPosList[num].first][OneBoxPosList[num].second] + 1;
 				vectorSaveOneBoxPosList.push_back(make_pair(iHMove, iVMove));
-				cout << iHMove << "  " << iVMove << endl;
-				//cout << iStoreConnectionArray[iHMove][iVMove] << endl;
+
 				iCntTotal++;
 			}
+
 		}
-		bCheckVisitedArray[OneBoxPosList[num].first][OneBoxPosList[num].second] = 1;
+		//bCheckVisitedArray[OneBoxPosList[num].first][OneBoxPosList[num].second] = 1;
 	}
 
 	if (vectorSaveOneBoxPosList.size() > 0) {
@@ -65,22 +64,28 @@ void BFS(vector<pair<int, int>> OneBoxPosList) {
 
 
 
+
+
+
+
+
 int main(void)
 {
 	cin.tie(NULL);
 	ios::sync_with_stdio(false);
 	cin >> N;
 	cin >> Rows;
-	for (int i = 0; i < N; i++) {
-		
-		for (int j = 0; j < Rows; j++) {
+	for (int i = 0; i < Rows; i++) {
+		for (int j = 0; j < N; j++) {
 			int tempA;
 			cin >> tempA;
-			iStoreConnectionArray[i].push_back(tempA);
+			iStoreConnectionArray[i][j] = tempA;
 			if (tempA == 1) {
+				bCheckVisitedArray[i][j] = 1;
 				iSaveOneBoxPosList.push_back(make_pair(i, j));
 			}
 			else if (tempA == -1) {
+				bCheckVisitedArray[i][j] = -1;
 				iCntEmptyBox++;
 			}
 		}
@@ -88,29 +93,26 @@ int main(void)
 
 	BFS(iSaveOneBoxPosList);
 
-	//for (int i = 0; i < N; i++) {
-	//	for (int j = 0; j < N; j++) {
-	//		if (bCheckVisitedArray[i][j] == 0 && iStoreConnectionArray[i][j] != 0) {
-	//			bCheckVisitedArray[i][j] = 1;
-	//			iCntIndex = 1;
-	//			BFS(i, j);
-	//			bResultVector.push_back(iCntIndex);
-
-
-	//			//iNumBlocks++;
-	//		}
-	//	}
-	//}
-
-	//sort(bResultVector.begin(), bResultVector.end());
-
-
-	printf("%d\n", iNumLevel);
-	printf("%d\n", iCntTotal);
-	printf("%d\n", iCntEmptyBox);
-	/*for (int i = 0; i < bResultVector.size(); i++) {
-		if (bResultVector[i] > 0) {
-			printf("%d\n", bResultVector[i]);
+	int iResult = 0;
+	for (int i = 0; i < Rows; i++) {
+		for (int j = 0; j < N; j++) {
+			iResult = max(iResult, bCheckVisitedArray[i][j]);
+			
 		}
-	}*/
+	}
+
+	for (int i = 0; i < Rows; i++) {
+		for (int j = 0; j < N; j++) {
+			if (bCheckVisitedArray[i][j] == 0 && iStoreConnectionArray[i][j] == 0) {
+				iResult = 0;
+				break;
+			}
+		}
+	}
+
+
+
+
+	printf("%d\n", iResult-1);
+
 }
