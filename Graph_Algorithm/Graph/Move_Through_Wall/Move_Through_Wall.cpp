@@ -1,20 +1,99 @@
-﻿// Move_Through_Wall.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
+﻿#include<iostream>
+#include<queue>
+#include<deque>
+#include<string.h>
+#include<math.h>
+#include<cmath>
+#include<stack>
+#include<algorithm>
 
-#include <iostream>
+using namespace std;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+int N, Rows, iStartNodeFirst, iStartNodeSecond;
+int iStoreConnectionArray[1001][1001];
+int bCheckVisitedArray[1001][1001][2];
+vector<pair<int, int>> bWantResultVector;
+int iCntWall = 0;
+int iCntEmptyBox = 0;
+
+int iDirectionListFirst[4] = { -1,0,1,0 };
+int iDirectionListSecond[4] = { 0,1,0,-1 };
+
+
+bool CheckError(int iFirst, int iSecond) {
+
+	if (iFirst >= Rows || iFirst < 0 || iSecond >= N || iSecond < 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
 
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
+int BFS() {
+
+	queue < pair<pair<int, int>, int>> qSavePathInfo;
+
+	qSavePathInfo.push({ { 1,1 }, 1 });
+	bCheckVisitedArray[1][1][1] = 1;
+
+
+	while (!qSavePathInfo.empty()) {
+
+		int iPosY = qSavePathInfo.front().first.first;
+		int iPosX = qSavePathInfo.front().first.second;
+		int iCheckWall = qSavePathInfo.front().second;
+
+
+		if (iPosY == N && iPosX == Rows) {
+			return bCheckVisitedArray[iPosY][iPosX][iCheckWall];
+		}
+
+
+		for (int i = 0; i < 4; i++) {
+
+			int iHMove = iPosY + iDirectionListFirst[i];
+			int iVMove = iPosX + iDirectionListSecond[i];
+			if (CheckError(iHMove, iVMove)) continue;
+			if (iCheckWall == 1 && iStoreConnectionArray[iHMove][iVMove] == 1) {
+				bCheckVisitedArray[iHMove][iVMove][iCheckWall-1] = bCheckVisitedArray[iHMove][iVMove][iCheckWall] + 1;
+				qSavePathInfo.push(make_pair(make_pair(iHMove, iVMove), iCheckWall -1));
+			}
+			if (iStoreConnectionArray[iHMove][iVMove] == 0 && bCheckVisitedArray[iHMove][iVMove][iCheckWall] == 0) {
+				bCheckVisitedArray[iHMove][iVMove][iCheckWall] = bCheckVisitedArray[iHMove][iVMove][iCheckWall] + 1;
+				qSavePathInfo.push(make_pair(make_pair(iHMove, iVMove), iCheckWall));
+			}
+		}
+
+
+	}
+	return -1;
+}
+
+int main(void)
+{
+	cin.tie(NULL);
+	ios::sync_with_stdio(false);
+	cin >> N;
+	cin >> Rows;
+
+
+	string str;
+
+	for (int i = 0; i < N; i++) {
+		cin >> str;
+		for (int j = 0; j < str.length(); j++) {
+			bCheckVisitedArray[i][j][1] = 0;
+			if (str[j] == '1') {
+				iStoreConnectionArray[i][j] = 1;
+			}
+			else iStoreConnectionArray[i][j] = 0;
+		}
+	}
+
+	//BFS();
+
+
+	printf("%d\n", BFS());
+}
