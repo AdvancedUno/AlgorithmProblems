@@ -10,21 +10,20 @@
 #define endl "\n"
 #define INF 987654321
 
-
 using namespace std;
 
 
 int N, iNumConnection, iStartNode;
 vector<pair<int,int>> iStoreConnectionArray[20010];
-int iParentInfoArray[20010];
-int iResultSaveArray[20010];
+int iParentInfoArray[20005];
+int iResultSaveArray[20005];
 
 
 
 
 
 void BFS(int iWantedNode) {
-	priority_queue<pair<int, int>> qSaveCount;
+	priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > > qSaveCount;
 	iResultSaveArray[iWantedNode] = 0;
 	qSaveCount.push({ 0, iWantedNode});
 
@@ -32,7 +31,7 @@ void BFS(int iWantedNode) {
 	while (!qSaveCount.empty()) {
 
 		int iCurrentNode = qSaveCount.top().second;
-		int iCurrentWeight = -qSaveCount.top().first;
+		int iCurrentWeight = qSaveCount.top().first;
 		qSaveCount.pop();
 		if (iResultSaveArray[iCurrentNode] < iCurrentWeight) {
 			continue;
@@ -45,11 +44,9 @@ void BFS(int iWantedNode) {
 
 			if (iResultSaveArray[iNextNode] > iNextWeight + iCurrentWeight) {
 				iResultSaveArray[iNextNode] = iNextWeight + iCurrentWeight;
-				qSaveCount.push(make_pair(-iResultSaveArray[iNextNode],iNextNode));
+				qSaveCount.push(make_pair(iResultSaveArray[iNextNode],iNextNode));
 			}
 		}
-
-
 
 	}
 }
@@ -67,16 +64,14 @@ int main(void)
 	cin >> iNumConnection;
 	cin >> iStartNode;
 
-	for (int i = 1; i <= iNumConnection; i ++) {
-		iResultSaveArray[i] = INF;
-	}
-
 	for (int i = 1; i <= iNumConnection; i++) {
 		int tempA, tempB, tempWeight;
 		cin >> tempA >> tempB >> tempWeight;
 		iStoreConnectionArray[tempA].push_back(make_pair(tempB, tempWeight));
 	}
-
+	for (int i = 1; i <= N; i++) {
+		iResultSaveArray[i] = INF;
+	}
 
 	BFS(iStartNode);
 
@@ -86,9 +81,7 @@ int main(void)
 		}
 		else {
 			cout << iResultSaveArray[i] << endl;
-			
 		}
-		
 	}
 }
 
