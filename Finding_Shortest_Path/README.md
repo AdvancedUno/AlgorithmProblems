@@ -8,7 +8,7 @@ Dijkstra's algorithm is a greedy algorithm and it looks for the shortest current
 
 
 
-
+![DIJ5](https://user-images.githubusercontent.com/108073642/182383997-42009efc-003c-482a-b1b3-4d1e9fa17d44.jpg)
 https://stackabuse.com/courses/graphs-in-python-theory-and-implementation/lessons/dijkstras-algorithm/
 
 
