@@ -11,14 +11,10 @@
 
 using namespace std;
 
-
 int N, iNumConnection, iStartNode;
 vector<pair<int, int>> iStoreConnectionArray[200100];
-int iParentInfoArray[20005];
-//int iResultSaveArray[20005];
 int iFirstNode;
 int iSecondNode;
-
 int iFirstPath;
 int iSecondPath;
 int iThirdPath;
@@ -27,7 +23,7 @@ int iResultSaveArraySecond[20005];
 int iResultSaveArrayThird[20005];
 
 
-void BFS(int iWantedNode, int iResultSaveArray[]) {
+void Dijkstra(int iWantedNode, int iResultSaveArray[]) {
 	priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > > qSaveCount;
 	iResultSaveArray[iWantedNode] = 0;
 	qSaveCount.push({ 0, iWantedNode });
@@ -54,21 +50,13 @@ void BFS(int iWantedNode, int iResultSaveArray[]) {
 		}
 
 	}
-
-	//return iResultSaveArray;
-
-
 }
-
-
-
 
 int main(void)
 {
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
-
 
 	cin >> N;
 	cin >> iNumConnection;
@@ -83,20 +71,15 @@ int main(void)
 
 	cin >> iFirstNode >> iSecondNode;
 
-
-
-
 	for (int i = 1; i <= N; i++) {
 		iResultSaveArrayFirst[i] = INF;
 		iResultSaveArraySecond[i] = INF;
 		iResultSaveArrayThird[i] = INF;
-
 	}
 
-	BFS(1, iResultSaveArrayFirst);
-	BFS(iFirstNode, iResultSaveArraySecond);
-	BFS(iSecondNode, iResultSaveArrayThird);
-
+	Dijkstra(1, iResultSaveArrayFirst);
+	Dijkstra(iFirstNode, iResultSaveArraySecond);
+	Dijkstra(iSecondNode, iResultSaveArrayThird);
 
 	if (iResultSaveArrayFirst[iFirstNode] == INF || iResultSaveArraySecond[iSecondNode] == INF || iResultSaveArrayThird[N] == INF ||
 		iResultSaveArrayFirst[iSecondNode] == INF || iResultSaveArraySecond[iSecondNode] == INF ||
@@ -113,7 +96,4 @@ int main(void)
 
 		cout << iAns << endl;
 	}
-
-	
-	
 }
