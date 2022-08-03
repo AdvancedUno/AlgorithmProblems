@@ -32,7 +32,7 @@ void Dijkstra(int iWantedNode, int iTargetNode) {
 		if (iResultSaveArray[iCurrentNode] < iCurrentWeight) {
 			continue;
 		}
-
+		// d
 		if (iCurrentNode == iTargetNode) {
 			break;
 		}
