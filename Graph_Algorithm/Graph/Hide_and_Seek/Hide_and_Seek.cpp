@@ -1,10 +1,9 @@
 ﻿#include<iostream>
-#include<queue>
 #include<math.h>
 #include<stdio.h>
-#include<cmath>
 #include<algorithm>
 #include <queue>
+
 #define MAX_SIZE 100000+1
 #define endl "\n"
 #define INF 987654321
@@ -12,9 +11,8 @@
 using namespace std;
 
 
-int N, K, iStartNode;
+int N, K;
 vector<pair<int, int>> iStoreConnectionArray[MAX_SIZE];
-int iVisitedInfoArray[MAX_SIZE];
 int iResultSaveArray[MAX_SIZE];
 int iNextNode ;
 int iNextWeight ;
@@ -28,7 +26,8 @@ int Dijkstra(int iWantedNode, int iTargetNode) {
 	while (!qSaveCount.empty()) {
 
 		int iCurrentNode = qSaveCount.front().second;
-		int iCurrentWeight = qSaveCount.front().first;
+		//int iCurrentWeight = qSaveCount.front().first;
+		int iCurrentWeight = iResultSaveArray[iCurrentNode];
 		qSaveCount.pop();
 
 
@@ -63,7 +62,7 @@ int Dijkstra(int iWantedNode, int iTargetNode) {
 				iNextNode = iCurrentNode - 1;
 				iNextWeight = iCurrentWeight + 1;
 
-				if (iNextNode > 0 && iResultSaveArray[iNextNode] > iNextWeight) {
+				if (iNextNode >= 0 && iResultSaveArray[iNextNode] > iNextWeight) {
 					iResultSaveArray[iNextNode] = iNextWeight ;
 					qSaveCount.push(make_pair(iResultSaveArray[iNextNode], iNextNode));
 				}
@@ -73,6 +72,7 @@ int Dijkstra(int iWantedNode, int iTargetNode) {
 		}
 
 	}
+	return 0;
 }
 
 
@@ -86,13 +86,14 @@ int main(void)
 
 	cin >> N;
 	cin >> K;
+	int maxNum = max(N, K);
 
-	for (int i = 1; i <= max(N,K); i++) {
+	for (int i = 0; i <= maxNum; i++) {
 		iResultSaveArray[i] = INF;
 	}
 
+	Dijkstra(N, K);
 
-
-	cout << Dijkstra(N, K) << endl;
+	cout << iResultSaveArray[K] << endl;
 
 }
