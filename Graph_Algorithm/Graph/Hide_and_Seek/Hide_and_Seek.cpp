@@ -5,7 +5,7 @@
 #include<cmath>
 #include<algorithm>
 #include <queue>
-
+#define MAX_SIZE 100000+1
 #define endl "\n"
 #define INF 987654321
 
@@ -13,12 +13,12 @@ using namespace std;
 
 
 int N, K, iStartNode;
-vector<pair<int, int>> iStoreConnectionArray[20010];
-int iVisitedInfoArray[20005];
-int iResultSaveArray[20005];
+vector<pair<int, int>> iStoreConnectionArray[MAX_SIZE];
+int iVisitedInfoArray[MAX_SIZE];
+int iResultSaveArray[MAX_SIZE];
 
 
-void Dijkstra(int iWantedNode, int iTargetNode) {
+int Dijkstra(int iWantedNode, int iTargetNode) {
 	priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > > qSaveCount;
 	iResultSaveArray[iWantedNode] = 0;
 	qSaveCount.push({ 0, iWantedNode });
@@ -29,42 +29,42 @@ void Dijkstra(int iWantedNode, int iTargetNode) {
 		int iCurrentNode = qSaveCount.top().second;
 		int iCurrentWeight = qSaveCount.top().first;
 		qSaveCount.pop();
-		if (iResultSaveArray[iCurrentNode] < iCurrentWeight) {
-			continue;
-		}
-		// d
+		//if (iResultSaveArray[iCurrentNode] < iCurrentWeight) {
+		//	continue;
+		//}
+
 		if (iCurrentNode == iTargetNode) {
-			break;
+			return iCurrentWeight;
 		}
 
 
 		for (int i = 0; i < 3; i++) {
 
-			if (int k = 0) {
-				int iNextNode = iStoreConnectionArray[iCurrentNode][i].first * 2;
-				int iNextWeight = iStoreConnectionArray[iCurrentNode][i].second;
+			if (i == 0) {
+				int iNextNode = iCurrentNode * 2;
+				int iNextWeight = iCurrentWeight;
 
-				if (iResultSaveArray[iNextNode] > iNextWeight + iCurrentWeight) {
-					iResultSaveArray[iNextNode] = iNextWeight + iCurrentWeight;
+				if (iNextNode < MAX_SIZE ) {
+					iResultSaveArray[iNextNode] = iNextWeight;
 					qSaveCount.push(make_pair(iResultSaveArray[iNextNode], iNextNode));
 				}
 			}
 
-			if (int k = 1) {
-				int iNextNode = iStoreConnectionArray[iCurrentNode][i].first + 1;
-				int iNextWeight = iStoreConnectionArray[iCurrentNode][i].second;
+			if (i == 1) {
+				int iNextNode = iCurrentNode + 1;
+				int iNextWeight = iCurrentWeight + 1;
 
-				if (iResultSaveArray[iNextNode] > iNextWeight + iCurrentWeight) {
-					iResultSaveArray[iNextNode] = iNextWeight + iCurrentWeight;
+				if (iNextNode < MAX_SIZE ) {
+					iResultSaveArray[iNextNode] = iNextWeight;
 					qSaveCount.push(make_pair(iResultSaveArray[iNextNode], iNextNode));
 				}
 			}
 
-			if (int k = 2) {
-				int iNextNode = iStoreConnectionArray[iCurrentNode][i].first -1;
-				int iNextWeight = iStoreConnectionArray[iCurrentNode][i].second;
+			if (i == 2) {
+				int iNextNode = iCurrentNode - 1;
+				int iNextWeight = iCurrentWeight + 1;
 
-				if (iResultSaveArray[iNextNode] > iNextWeight + iCurrentWeight) {
+				if (iNextNode > 0 ) {
 					iResultSaveArray[iNextNode] = iNextWeight + iCurrentWeight;
 					qSaveCount.push(make_pair(iResultSaveArray[iNextNode], iNextNode));
 				}
@@ -93,5 +93,7 @@ int main(void)
 	}
 
 	Dijkstra(N, K);
+
+	cout << iResultSaveArray[K-1] << endl;
 
 }
