@@ -12,16 +12,13 @@
 using namespace std;
 
 
-int N, iNumConnection, iStartNode;
+int N, K, iStartNode;
 vector<pair<int, int>> iStoreConnectionArray[20010];
 int iParentInfoArray[20005];
 int iResultSaveArray[20005];
 
 
-
-
-
-void BFS(int iWantedNode) {
+void Dijkstra(int iWantedNode) {
 	priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > > qSaveCount;
 	iResultSaveArray[iWantedNode] = 0;
 	qSaveCount.push({ 0, iWantedNode });
@@ -60,26 +57,15 @@ int main(void)
 	cout.tie(NULL);
 
 	cin >> N;
-	cin >> iNumConnection;
-	cin >> iStartNode;
+	cin >> K;
 
 	for (int i = 1; i <= iNumConnection; i++) {
-		int tempA, tempB, tempWeight;
-		cin >> tempA >> tempB >> tempWeight;
 		iStoreConnectionArray[tempA].push_back(make_pair(tempB, tempWeight));
 	}
 	for (int i = 1; i <= N; i++) {
 		iResultSaveArray[i] = INF;
 	}
 
-	BFS(iStartNode);
+	Dijkstra(iStartNode);
 
-	for (int i = 1; i <= N; i++) {
-		if (iResultSaveArray[i] == INF) {
-			cout << "INF" << endl;
-		}
-		else {
-			cout << iResultSaveArray[i] << endl;
-		}
-	}
 }
