@@ -33,15 +33,44 @@ void Dijkstra(int iWantedNode, int iTargetNode) {
 			continue;
 		}
 
-		for (int i = 0; i < iStoreConnectionArray[iCurrentNode].size(); i++) {
+		if (iCurrentNode == iTargetNode) {
+			break;
+		}
 
-			int iNextNode = iStoreConnectionArray[iCurrentNode][i].first;
-			int iNextWeight = iStoreConnectionArray[iCurrentNode][i].second;
 
-			if (iResultSaveArray[iNextNode] > iNextWeight + iCurrentWeight) {
-				iResultSaveArray[iNextNode] = iNextWeight + iCurrentWeight;
-				qSaveCount.push(make_pair(iResultSaveArray[iNextNode], iNextNode));
+		for (int i = 0; i < 3; i++) {
+
+			if (int k = 0) {
+				int iNextNode = iStoreConnectionArray[iCurrentNode][i].first * 2;
+				int iNextWeight = iStoreConnectionArray[iCurrentNode][i].second;
+
+				if (iResultSaveArray[iNextNode] > iNextWeight + iCurrentWeight) {
+					iResultSaveArray[iNextNode] = iNextWeight + iCurrentWeight;
+					qSaveCount.push(make_pair(iResultSaveArray[iNextNode], iNextNode));
+				}
 			}
+
+			if (int k = 1) {
+				int iNextNode = iStoreConnectionArray[iCurrentNode][i].first + 1;
+				int iNextWeight = iStoreConnectionArray[iCurrentNode][i].second;
+
+				if (iResultSaveArray[iNextNode] > iNextWeight + iCurrentWeight) {
+					iResultSaveArray[iNextNode] = iNextWeight + iCurrentWeight;
+					qSaveCount.push(make_pair(iResultSaveArray[iNextNode], iNextNode));
+				}
+			}
+
+			if (int k = 2) {
+				int iNextNode = iStoreConnectionArray[iCurrentNode][i].first -1;
+				int iNextWeight = iStoreConnectionArray[iCurrentNode][i].second;
+
+				if (iResultSaveArray[iNextNode] > iNextWeight + iCurrentWeight) {
+					iResultSaveArray[iNextNode] = iNextWeight + iCurrentWeight;
+					qSaveCount.push(make_pair(iResultSaveArray[iNextNode], iNextNode));
+				}
+			}
+			
+			
 		}
 
 	}
@@ -59,9 +88,9 @@ int main(void)
 	cin >> N;
 	cin >> K;
 
-	//for (int i = 1; i <= N; i++) {
-	//	iResultSaveArray[i] = INF;
-	//}
+	for (int i = 1; i <= N; i++) {
+		iResultSaveArray[i] = INF;
+	}
 
 	Dijkstra(N, K);
 
