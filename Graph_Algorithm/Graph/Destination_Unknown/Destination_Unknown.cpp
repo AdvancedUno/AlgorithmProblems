@@ -74,6 +74,7 @@ int main(void)
 			iStoreConnectionArray[tempA].push_back(make_pair(tempB, tempWeight));
 			iStoreConnectionArray[tempB].push_back(make_pair(tempA, tempWeight));
 		}
+
 		for (int j = 0; j < iDestNum; j++) {
 			int iTempNum;
 			cin >> iTempNum;
@@ -84,16 +85,20 @@ int main(void)
 			iResultSaveArray[j] = INF;
 		}
 
-		
 
+		
 		Dijkstra(iStartPos, iStoreConnectionArray);
 
 		int iToMidFirst = iResultSaveArray[iMidFirst];
 		int iToMidSecond = iResultSaveArray[iMidSecond];
+
 		
 		for (int j = 0; j < iDestNum; j++) {
 			iPredictDesWeightVector.push_back(iResultSaveArray[iPredictDesVector[j]]);
 		}
+
+
+
 
 		for (int j = 0; j <= iNodeNum; j++) {
 			iResultSaveArray[j] = INF;
@@ -125,10 +130,7 @@ int main(void)
 			else if (iPredictDesWeightVector[j] >= iResultSaveArray[iPredictDesVector[j]] + iMidBetweenWeight + iToMidFirst) {
 				iTempVec[j] = 1;
 			}
-
 		}
-
-
 		vector<int> ResultVec;
 		
 		for (int j = 0; j < iDestNum; j++) {
@@ -137,11 +139,9 @@ int main(void)
 			}
 		}
 		sort(ResultVec.begin(), ResultVec.end());
-
 		for (int j = 0; j < ResultVec.size(); j++) {
 			cout << ResultVec[j] << " ";
 		}
-
 		cout << "\n";
 
 	}
