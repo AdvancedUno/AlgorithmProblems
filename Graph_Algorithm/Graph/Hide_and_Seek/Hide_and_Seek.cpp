@@ -26,8 +26,8 @@ int Dijkstra(int iWantedNode, int iTargetNode) {
 	while (!qSaveCount.empty()) {
 
 		int iCurrentNode = qSaveCount.front().second;
-		//int iCurrentWeight = qSaveCount.front().first;
-		int iCurrentWeight = iResultSaveArray[iCurrentNode];
+		int iCurrentWeight = qSaveCount.front().first;
+		//int iCurrentWeight = iResultSaveArray[iCurrentNode];
 		qSaveCount.pop();
 
 
@@ -92,8 +92,8 @@ int main(void)
 		iResultSaveArray[i] = INF;
 	}
 
-	Dijkstra(N, K);
+	//Dijkstra(N, K);
 
-	cout << iResultSaveArray[K] << endl;
+	cout << Dijkstra(N, K) << endl;
 
 }
