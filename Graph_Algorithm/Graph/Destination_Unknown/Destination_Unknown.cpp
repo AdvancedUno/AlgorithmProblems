@@ -1,20 +1,149 @@
-﻿// Destination_Unknown.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
+﻿#include<iostream>
+#include<math.h>
+#include<stdio.h>
+#include<algorithm>
+#include <queue>
 
-#include <iostream>
+#define MAX_SIZE 2000+1
+#define endl "\n"
+#define INF 987654321
 
-int main()
-{
-    std::cout << "Hello World!\n";
+using namespace std;
+
+
+int iTestCases, iNodeNum, iConnectionNum, iDestNum, iStartPos, iMidFirst, iMidSecond;
+
+
+
+int iResultSaveArray[MAX_SIZE];
+int iNextNode;
+int iNextWeight;
+
+int Dijkstra(int iWantedNode, vector<pair<int, int>> iStoreConnectionArray[MAX_SIZE]) {
+	priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > > qSaveCount;
+	iResultSaveArray[iWantedNode] = 0;
+	qSaveCount.push({ 0, iWantedNode });
+
+
+	while (!qSaveCount.empty()) {
+
+		int iCurrentNode = qSaveCount.top().second;
+		int iCurrentWeight = qSaveCount.top().first;
+		qSaveCount.pop();
+
+		if (iResultSaveArray[iCurrentNode] < iCurrentWeight) {
+			continue;
+		}
+		
+		for (int i = 0; i < iStoreConnectionArray[iCurrentNode].size(); i++) {
+			iNextNode = iStoreConnectionArray[iCurrentNode][i].first;
+			iNextWeight = iStoreConnectionArray[iCurrentNode][i].second;
+
+			if (iResultSaveArray[iNextNode] > iNextWeight + iCurrentWeight) {
+				iResultSaveArray[iNextNode] = iNextWeight + iCurrentWeight;
+				qSaveCount.push(make_pair(iResultSaveArray[iNextNode], iNextNode));
+			}
+		}
+
+	}
+	return 0;
 }
 
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
 
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
+
+
+int main(void)
+{
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	cin >> iTestCases;
+	for (int i = 0; i < iTestCases; i++) {
+
+		vector<pair<int, int>> iStoreConnectionArray[MAX_SIZE];
+		vector<int> iPredictDesVector;
+		vector<int> iPredictDesWeightVector;
+		cin >> iNodeNum >> iConnectionNum >> iDestNum;
+		cin >> iStartPos >> iMidFirst >> iMidSecond;
+		
+		for (int j = 1; j <= iConnectionNum; j++) {
+
+			int tempA, tempB, tempWeight;
+			cin >> tempA >> tempB >> tempWeight;
+			iStoreConnectionArray[tempA].push_back(make_pair(tempB, tempWeight));
+			iStoreConnectionArray[tempB].push_back(make_pair(tempA, tempWeight));
+		}
+		for (int j = 0; j < iDestNum; j++) {
+			int iTempNum;
+			cin >> iTempNum;
+			iPredictDesVector.push_back(iTempNum);
+		}
+
+		for (int j = 0; j <= iNodeNum; j++) {
+			iResultSaveArray[j] = INF;
+		}
+
+		
+
+		Dijkstra(iStartPos, iStoreConnectionArray);
+
+		int iToMidFirst = iResultSaveArray[iMidFirst];
+		int iToMidSecond = iResultSaveArray[iMidSecond];
+		
+		for (int j = 0; j < iDestNum; j++) {
+			iPredictDesWeightVector.push_back(iResultSaveArray[iPredictDesVector[j]]);
+		}
+
+		for (int j = 0; j <= iNodeNum; j++) {
+			iResultSaveArray[j] = INF;
+		}
+		int iTempVec[2001];
+
+		int iMidBetweenWeight;
+		Dijkstra(iMidFirst, iStoreConnectionArray);
+		iMidBetweenWeight = iResultSaveArray[iMidSecond];
+		for (int j = 0; j < iDestNum; j++) {
+			if (iPredictDesWeightVector[j] < iResultSaveArray[iPredictDesVector[j]] + iMidBetweenWeight + iToMidSecond) {
+				iTempVec[j] = -1;
+			}
+			else {
+				iTempVec[j] = 1;
+			}
+
+		}
+
+		for (int j = 0; j <= iNodeNum; j++) {
+			iResultSaveArray[j] = INF;
+		}
+
+		Dijkstra(iMidSecond, iStoreConnectionArray);
+		for (int j = 0; j < iDestNum; j++) {
+			if (iPredictDesWeightVector[j] < iResultSaveArray[iPredictDesVector[j]] + iMidBetweenWeight + iToMidFirst && iTempVec[j] != 1) {
+				iTempVec[j] = -1;
+			}
+			else if (iPredictDesWeightVector[j] >= iResultSaveArray[iPredictDesVector[j]] + iMidBetweenWeight + iToMidFirst) {
+				iTempVec[j] = 1;
+			}
+
+		}
+
+
+		vector<int> ResultVec;
+		
+		for (int j = 0; j < iDestNum; j++) {
+			if (iTempVec[j] == 1) {
+				ResultVec.push_back(iPredictDesVector[j]);	
+			}
+		}
+		sort(ResultVec.begin(), ResultVec.end());
+
+		for (int j = 0; j < ResultVec.size(); j++) {
+			cout << ResultVec[j] << " ";
+		}
+
+		cout << "\n";
+
+	}
+
+}
