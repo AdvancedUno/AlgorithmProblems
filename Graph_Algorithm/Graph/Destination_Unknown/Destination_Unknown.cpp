@@ -13,8 +13,6 @@ using namespace std;
 
 int iTestCases, iNodeNum, iConnectionNum, iDestNum, iStartPos, iMidFirst, iMidSecond;
 
-
-
 int iResultSaveArray[MAX_SIZE];
 int iNextNode;
 int iNextWeight;
@@ -49,8 +47,11 @@ int Dijkstra(int iWantedNode, vector<pair<int, int>> iStoreConnectionArray[MAX_S
 	return 0;
 }
 
-
-
+void Reset() {
+	for (int j = 0; j <= iNodeNum; j++) {
+		iResultSaveArray[j] = INF;
+	}
+}
 
 int main(void)
 {
@@ -60,7 +61,6 @@ int main(void)
 
 	cin >> iTestCases;
 	for (int i = 0; i < iTestCases; i++) {
-
 		vector<pair<int, int>> iStoreConnectionArray[MAX_SIZE];
 		vector<int> iPredictDesVector;
 		vector<int> iPredictDesWeightVector;
@@ -74,38 +74,23 @@ int main(void)
 			iStoreConnectionArray[tempA].push_back(make_pair(tempB, tempWeight));
 			iStoreConnectionArray[tempB].push_back(make_pair(tempA, tempWeight));
 		}
-
 		for (int j = 0; j < iDestNum; j++) {
 			int iTempNum;
 			cin >> iTempNum;
 			iPredictDesVector.push_back(iTempNum);
 		}
-
-		for (int j = 0; j <= iNodeNum; j++) {
-			iResultSaveArray[j] = INF;
-		}
-
-
-		
+		Reset();
 		Dijkstra(iStartPos, iStoreConnectionArray);
-
 		int iToMidFirst = iResultSaveArray[iMidFirst];
 		int iToMidSecond = iResultSaveArray[iMidSecond];
-
-		
 		for (int j = 0; j < iDestNum; j++) {
 			iPredictDesWeightVector.push_back(iResultSaveArray[iPredictDesVector[j]]);
 		}
 
-
-
-
-		for (int j = 0; j <= iNodeNum; j++) {
-			iResultSaveArray[j] = INF;
-		}
 		int iTempVec[2001];
 
 		int iMidBetweenWeight;
+		Reset();
 		Dijkstra(iMidFirst, iStoreConnectionArray);
 		iMidBetweenWeight = iResultSaveArray[iMidSecond];
 		for (int j = 0; j < iDestNum; j++) {
@@ -115,13 +100,9 @@ int main(void)
 			else {
 				iTempVec[j] = 1;
 			}
-
 		}
 
-		for (int j = 0; j <= iNodeNum; j++) {
-			iResultSaveArray[j] = INF;
-		}
-
+		Reset();
 		Dijkstra(iMidSecond, iStoreConnectionArray);
 		for (int j = 0; j < iDestNum; j++) {
 			if (iPredictDesWeightVector[j] < iResultSaveArray[iPredictDesVector[j]] + iMidBetweenWeight + iToMidFirst && iTempVec[j] != 1) {
@@ -143,7 +124,6 @@ int main(void)
 			cout << ResultVec[j] << " ";
 		}
 		cout << "\n";
-
 	}
 
 }
