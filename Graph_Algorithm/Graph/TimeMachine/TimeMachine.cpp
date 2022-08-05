@@ -26,22 +26,24 @@ int iCurrentNode;
 int BellmanFord(int iWantedNode) {
 	iResultSaveArray[iWantedNode] = 0;
 
+	for (int loop = 1; loop <= iNodeNum; loop++) {
+		for (int i = 1; i <= iNodeNum; i++) {
 
-	for (int i = 1; i <= iNodeNum; i++) {
-		
 
-		for (int j = 0; j < iStoreConnectionArray[i].size(); j++) {
-			//cout << j << endl;
-			iCurrentNode = i;
-			iNextNode = iStoreConnectionArray[iCurrentNode][j].first;
-			iNextWeight = iStoreConnectionArray[iCurrentNode][i].second;
-			cout << j << endl;
-			if (iResultSaveArray[iNextNode] > iNextWeight + iResultSaveArray[iCurrentNode]) {
-				iResultSaveArray[iNextNode] = iNextWeight + iResultSaveArray[iCurrentNode];
+			for (int j = 0; j < iStoreConnectionArray[i].size(); j++) {
+				iCurrentNode = i;
+				iNextNode = iStoreConnectionArray[iCurrentNode][j].first;
+				iNextWeight = iStoreConnectionArray[iCurrentNode][j].second;
+
+				if (iResultSaveArray[iNextNode] > iNextWeight + iResultSaveArray[iCurrentNode]) {
+					iResultSaveArray[iNextNode] = iNextWeight + iResultSaveArray[iCurrentNode];
+				}
 			}
-		}
 
+		}
 	}
+
+	
 
 
 	return 0;
@@ -68,7 +70,7 @@ int main(void)
 		int tempA, tempB, tempWeight;
 		cin >> tempA >> tempB >> tempWeight;
 		iStoreConnectionArray[tempA].push_back(make_pair(tempB, tempWeight));
-		iStoreConnectionArray[tempB].push_back(make_pair(tempA, tempWeight));
+		//iStoreConnectionArray[tempB].push_back(make_pair(tempA, tempWeight));
 	}
 
 
@@ -76,7 +78,7 @@ int main(void)
 	Reset();
 	BellmanFord(iStartPos);
 
-	for (int i = 1; i <= iNodeNum; i++) {
+	for (int i = 2; i <= iNodeNum; i++) {
 
 		if (iResultSaveArray[i] != INF) {
 			cout << iResultSaveArray[i] << endl;
