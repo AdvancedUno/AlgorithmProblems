@@ -4,7 +4,7 @@
 #include<algorithm>
 #include <queue>
 
-#define MAX_SIZE 500+1
+#define MAX_SIZE 510+1
 #define endl "\n"
 #define INF 987654321
 
@@ -23,34 +23,38 @@ int iNextNode;
 int iNextWeight;
 int iCurrentNode;
 
-int BellmanFord(int iWantedNode) {
+bool BellmanFord(int iWantedNode) {
 	iResultSaveArray[iWantedNode] = 0;
 
-	for (int loop = 1; loop <= iNodeNum; loop++) {
+	for (int loop = 0; loop <= iNodeNum; loop++) {
 		for (int i = 1; i <= iNodeNum; i++) {
-
-
 			for (int j = 0; j < iStoreConnectionArray[i].size(); j++) {
 				iCurrentNode = i;
 				iNextNode = iStoreConnectionArray[iCurrentNode][j].first;
 				iNextWeight = iStoreConnectionArray[iCurrentNode][j].second;
 
+				if (iResultSaveArray[iCurrentNode] == INF)continue;
+
 				if (iResultSaveArray[iNextNode] > iNextWeight + iResultSaveArray[iCurrentNode]) {
 					iResultSaveArray[iNextNode] = iNextWeight + iResultSaveArray[iCurrentNode];
+
+					if (loop == iNodeNum) {
+						return true;
+					}
 				}
+
 			}
 
 		}
 	}
 
-	
 
 
-	return 0;
+	return false;
 }
 
 void Reset() {
-	for (int j = 0; j <= iNodeNum; j++) {
+	for (int j = 1; j <= iNodeNum; j++) {
 		iResultSaveArray[j] = INF;
 	}
 }
@@ -76,21 +80,25 @@ int main(void)
 
 	iStartPos = 1;
 	Reset();
-	BellmanFord(iStartPos);
+	bool bNegLoop = BellmanFord(iStartPos);
 
-	for (int i = 2; i <= iNodeNum; i++) {
 
-		if (iResultSaveArray[i] != INF) {
-			cout << iResultSaveArray[i] << endl;
-		}
-		else {
-			cout << -1 << endl;
+	if (bNegLoop) {
+		cout << -1 << endl;
+	}
+	else {
+		for (int i = 2; i <= iNodeNum; i++) {
+
+			if (iResultSaveArray[i] != INF) {
+				cout << iResultSaveArray[i] << endl;
+			}
+			else {
+				cout << -1 << endl;
+			}
 		}
 
 	}
-
-
+	
 	return 0;
-
 
 }
