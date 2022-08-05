@@ -4,33 +4,29 @@
 #include<algorithm>
 #include <queue>
 
-#define MAX_SIZE 510+1
+#define MAX_SIZE 500+1
 #define endl "\n"
-#define INF 987654321
+#define INF 987654321 
 
 
 using namespace std;
 
 
 vector<pair<int, int>> iStoreConnectionArray[MAX_SIZE];
-vector<int> iPredictDesVector;
-vector<int> iPredictDesWeightVector;
 
 int iNodeNum, iConnectionNum, iStartPos;
 
 int iResultSaveArray[MAX_SIZE];
-int iNextNode;
-int iNextWeight;
-int iCurrentNode;
+
 
 bool BellmanFord(int iWantedNode) {
-	iResultSaveArray[iWantedNode] = 0;
+	iResultSaveArray[1] = 0;
 	for (int loop = 1; loop <= iNodeNum; loop++) {
 		for (int i = 1; i <= iNodeNum; i++) {
 			for (int j = 0; j < iStoreConnectionArray[i].size(); j++) {
-				iCurrentNode = i;
-				iNextNode = iStoreConnectionArray[iCurrentNode][j].first;
-				iNextWeight = iStoreConnectionArray[iCurrentNode][j].second;
+				int iCurrentNode = i;
+				int iNextNode = iStoreConnectionArray[iCurrentNode][j].first;
+				int iNextWeight = iStoreConnectionArray[iCurrentNode][j].second;
 
 				if (iResultSaveArray[iCurrentNode] == INF)continue;
 
@@ -77,7 +73,7 @@ int main(void)
 	cin >> iNodeNum >> iConnectionNum;
 
 
-	for (int j = 1; j <= iConnectionNum; j++) {
+	for (int j = 0; j < iConnectionNum; j++) {
 
 		int tempA, tempB, tempWeight;
 		cin >> tempA >> tempB >> tempWeight;
