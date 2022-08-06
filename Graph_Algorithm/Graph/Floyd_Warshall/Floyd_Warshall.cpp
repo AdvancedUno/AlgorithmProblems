@@ -24,15 +24,13 @@ bool BellmanFord(int iWantedNode) {
 	for (int loop = 1; loop <= iNodeNum; loop++) {
 		iResultSaveArray[loop][loop] = 0;
 		for (int i = 1; i <= iNodeNum; i++) {
-			for (int j = 0; j < iStoreConnectionArray[i].size(); j++) {
+			for (int j = 1; j <= iNodeNum; j++) {
+				if (i == loop || i == j)continue;
 				int iCurrentNode = i;
-				int iNextNode = iStoreConnectionArray[iCurrentNode][j].first;
-				int iNextWeight = iStoreConnectionArray[iCurrentNode][j].second;
+				int iTo = j;
 
-				//if (iResultSaveArray[iCurrentNode] == INF)continue;
-
-				if (iResultSaveArray[iCurrentNode][iNextNode] > iNextWeight + iResultSaveArray[iCurrentNode][iNextNode-1]) {
-					iResultSaveArray[iCurrentNode][iNextNode] = iNextWeight + iResultSaveArray[iCurrentNode][iNextNode - 1];
+				if (iResultSaveArray[iCurrentNode][iTo] >  iResultSaveArray[iCurrentNode][loop] + iResultSaveArray[loop][iTo]) {
+					iResultSaveArray[iCurrentNode][iTo] = iResultSaveArray[iCurrentNode][loop] + iResultSaveArray[loop][iTo];
 				}
 
 			}
@@ -81,8 +79,10 @@ int main(void)
 		int tempA, tempB, tempWeight;
 		cin >> tempA >> tempB >> tempWeight;
 
-		iResultSaveArray[tempA][tempB] = tempWeight;
-		iStoreConnectionArray[tempA].push_back(make_pair(tempB, tempWeight));
+		if (iResultSaveArray[tempA][tempB] > tempWeight) {
+			iResultSaveArray[tempA][tempB] = tempWeight;
+		}
+
 	}
 
 
