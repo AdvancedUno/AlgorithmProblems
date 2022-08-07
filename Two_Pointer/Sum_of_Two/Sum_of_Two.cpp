@@ -1,20 +1,104 @@
-﻿// Sum_of_Two.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
+﻿#include <iostream>
+#include <math.h>
+#include <vector>
+#include <stdio.h>
+#include <algorithm>
 
-#include <iostream>
+using namespace std;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+int iNumbers;
+int iResltLeft;
+int iResltRight;
+long long iMinSum = 200000001;
+
+vector<int> iStoreNumVector;
+
+
+int GivePos(int iLeft, int iRight,  bool bCheck) {
+
+	if (iLeft > iRight && bCheck) {
+		return iLeft;
+	}else if (iLeft > iRight && !bCheck) {
+		return iRight;
+	}
+
+	int iMidPos = (iRight + iLeft) / 2;
+
+
+
+
+	if (bCheck && abs(iStoreNumVector[iMidPos]) > abs(iStoreNumVector[iRight]) ) {
+		return iMidPos;
+	}
+	else if (!bCheck && abs(iStoreNumVector[iMidPos]) < abs(iStoreNumVector[iRight])) {
+		return iMidPos;
+	}
+	else if(bCheck){
+		GivePos(iLeft, iMidPos, bCheck);
+	}
+	else if (!bCheck) {
+		GivePos(iMidPos+1, iRight, bCheck);
+	}
+
+
 }
 
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
+int Solve(int iLeft, int iRight) {
 
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
+	while (iLeft < iRight) {
+
+		
+		if (abs(iStoreNumVector[iLeft] + iStoreNumVector[iRight]) < iMinSum) {
+			iMinSum = abs(iStoreNumVector[iLeft] + iStoreNumVector[iRight]);
+			iResltLeft = iStoreNumVector[iLeft];
+			iResltRight = iStoreNumVector[iRight];
+		}
+
+		if(abs(iStoreNumVector[iLeft]) > abs(iStoreNumVector[iRight])){
+
+			//iLeft = GivePos(iLeft, iRight, true);
+
+			iLeft++;
+		}
+		else if (abs(iStoreNumVector[iLeft]) < abs(iStoreNumVector[iRight])) {
+			//iRight = GivePos(iLeft, iRight, false);
+			iRight--;
+		}
+
+
+	}
+
+	return 0;
+
+}
+
+
+
+
+int main() {
+	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+	cin >> iNumbers;
+
+	for (int i = 0; i < iNumbers; i++) {
+		
+		int iTempNum;
+		cin >> iTempNum;
+		iStoreNumVector.push_back(iTempNum);
+
+	}
+
+
+	sort(iStoreNumVector.begin(), iStoreNumVector.end());
+
+
+
+	Solve(0, iStoreNumVector.size()-1);
+
+
+
+	cout << iResltLeft << " " << iResltRight << endl;
+
+
+
+
+}
