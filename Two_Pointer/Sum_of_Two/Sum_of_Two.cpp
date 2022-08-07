@@ -47,21 +47,17 @@ int Solve(int iLeft, int iRight) {
 
 	while (iLeft < iRight) {
 
-		
-		if (abs(iStoreNumVector[iLeft] + iStoreNumVector[iRight]) < iMinSum) {
-			iMinSum = abs(iStoreNumVector[iLeft] + iStoreNumVector[iRight]);
+		int iSum = iStoreNumVector[iLeft] + iStoreNumVector[iRight];
+		if (abs(iSum) < iMinSum) {
+			iMinSum = iSum;
 			iResltLeft = iStoreNumVector[iLeft];
 			iResltRight = iStoreNumVector[iRight];
 		}
 
-		if(abs(iStoreNumVector[iLeft]) > abs(iStoreNumVector[iRight])){
-
-			//iLeft = GivePos(iLeft, iRight, true);
-
+		if(iSum <= 0){
 			iLeft++;
 		}
-		else if (abs(iStoreNumVector[iLeft]) < abs(iStoreNumVector[iRight])) {
-			//iRight = GivePos(iLeft, iRight, false);
+		else {
 			iRight--;
 		}
 
