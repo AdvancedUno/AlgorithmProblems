@@ -12,7 +12,6 @@
 
 using namespace std;
 
-
 int N, iNumConnection, iStartNode;
 vector<pair<int,int>> iStoreConnectionArray[20010];
 int iParentInfoArray[20005];
@@ -47,11 +46,8 @@ void BFS(int iWantedNode) {
 				qSaveCount.push(make_pair(iResultSaveArray[iNextNode],iNextNode));
 			}
 		}
-
 	}
 }
-
-
 
 
 int main(void)
