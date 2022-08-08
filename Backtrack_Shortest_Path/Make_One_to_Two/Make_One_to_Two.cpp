@@ -40,15 +40,15 @@ int main() {
 	}
 
 
-	cout << iStore[iNum] << endl;
+	cout << iStore[iNum] << "\n";
 	if (iNum != 0) {
-		cout << iNum << " ";
+		cout << iNum << ' ';
 	}
 	
 	while (iNum != 1) {
 		
 		iNum = iBefore[iNum];
-		cout << iNum << " ";
+		cout << iNum << ' ';
 	}
 
 	return 0;
