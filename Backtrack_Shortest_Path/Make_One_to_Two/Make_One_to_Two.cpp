@@ -5,15 +5,10 @@
 
 using namespace std;
 
-
-
-
-
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(0);
 	cout.tie(0);
-
 
 	int iNum;
 	cin >> iNum;
@@ -38,7 +33,6 @@ int main() {
 		}
 	}
 
-
 	cout << iStore[iNum] << '\n';
 	if (iNum != 0) {
 		cout << iNum << ' ';
@@ -49,6 +43,5 @@ int main() {
 		iNum = iBefore[iNum];
 		cout << iNum << ' ';
 	}
-
 	return 0;
 }
