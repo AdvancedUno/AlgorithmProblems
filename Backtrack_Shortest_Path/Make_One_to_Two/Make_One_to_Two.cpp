@@ -6,10 +6,7 @@
 using namespace std;
 
 
-int iNum;
 
-int iBefore[1000001];
-int iStore[1000001];
 
 
 int main() {
@@ -18,16 +15,18 @@ int main() {
 	cout.tie(0);
 
 
+	int iNum;
 	cin >> iNum;
+	vector<int> iBefore(iNum+1);
+	vector<int> iStore(iNum+1);
 
-	iStore[1] = 0;
 	iBefore[1] = 1;
 	for (int i = 2; i <= iNum; i++) {
 		iStore[i] = iStore[i - 1] + 1;
 		iBefore[i] = i - 1;
 		if (i % 3 == 0) {
-			if (iStore[i] > iStore[1 / 3] + 1) {
-				iStore[i] = iStore[1 / 3] + 1;
+			if (iStore[i] > iStore[i / 3] + 1) {
+				iStore[i] = iStore[i / 3] + 1;
 				iBefore[i] = i / 3;
 			}
 		}
@@ -40,7 +39,7 @@ int main() {
 	}
 
 
-	cout << iStore[iNum] << "\n";
+	cout << iStore[iNum] << '\n';
 	if (iNum != 0) {
 		cout << iNum << ' ';
 	}
