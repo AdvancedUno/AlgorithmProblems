@@ -14,23 +14,28 @@ int main() {
 	cout.tie(0);
 	cin >> iNum;
 
-	for (int i = 1; i < iNum; i++) {
+	for (int i = 0; i < iNum; i++) {
 		int iTemp;
 		cin >> iTemp;
 		iSaveVec[i] = iTemp;
 	}
+	std::fill_n(iSavePast, 1001, 1);
 
+	int iCnt = 1;
 
-	int iCnt = 0;
-	iSavePast[0] = 1;
-	for (int i = 1; i <= iNum; i++) {
-		for (int j = i - 1; j >= 0; j--) {
+	for (int i = 0; i < iNum; i++) {
+		for (int j = 0; j < i; j++) {
 			if (iSaveVec[i] > iSaveVec[j]) {
 				iSavePast[i] = max(iSavePast[i], iSavePast[j] +1);
 			}
-			if (iSavePast[j] +1 < iSavePast[i]) {
-				iSavePrev[i] = iSaveVec[i];
+			if (iSavePast[i] == iSavePast[j]) {
+				iSavePrev[i] = min(iSaveVec[i], iSaveVec[j]);
 			}
+
+
+		}
+		if (iSavePast[i] > iCnt) {
+			iSavePrev[i] = iSaveVec[i];
 		}
 
 		iCnt = max(iCnt, iSavePast[i]);
