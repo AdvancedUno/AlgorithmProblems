@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include<vector>
 #include<math.h>
 #include<algorithm>
@@ -19,9 +19,7 @@ int main() {
 		cin >> iTemp;
 		iSaveVec[i] = iTemp;
 	}
-	std::fill_n(iSavePast, 1001, 1);
 
-	int iCnt = 1;
 
 	int iCnt = 0;
 	int iMaxPos = 0;
