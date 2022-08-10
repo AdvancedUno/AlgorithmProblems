@@ -8,6 +8,7 @@ int iNum;
 int iSaveVec[1000001];
 vector<int> iSavePast;
 int iSavePrev[1000001];
+int iSaveCurrent[1000001];
 vector <int>::iterator iVecIter;
 int main() {
 	ios::sync_with_stdio(false);
@@ -26,31 +27,36 @@ int main() {
 	int iMaxPos = 1;
 	int iTrackLarge = 0;
 
-	
+
 	iSavePast.push_back(iSaveVec[1]);
 	iSavePrev[1] = 0;
-	
+	iSaveCurrent[1] = 1;
+
 
 	for (int i = 2; i <= iNum; i++) {
-
-		
 		if (iSaveVec[i] > iSavePast.back()) {
 			iSavePast.push_back(iSaveVec[i]);
-			iSavePrev[i] = iMaxPos;
+			iSavePrev[i] = iSaveCurrent[iSavePast.size() - 1];
 			iMaxPos = i;
+			iSaveCurrent[iSavePast.size()] = iMaxPos;
 			continue;
 		}
 
 		if (iSaveVec[i] < iSavePast.front()) {
 			iSavePast[0] = iSaveVec[i];
 			iSavePrev[i] = 0;
+			iSaveCurrent[1] = i;
+			if (iSavePast.size() == 1) {
+				iMaxPos = i;
+			}
 		}
 		else if (iSaveVec[i] > iSavePast.front() && iSaveVec[i] < iSavePast.back()) {
 			iVecIter = lower_bound(iSavePast.begin(), iSavePast.end(), iSaveVec[i]);
 			(*iVecIter) = iSaveVec[i];
-			iSavePrev[i] = iVecIter - iSavePast.begin() +1;
+			iSaveCurrent[iVecIter - iSavePast.begin() + 1] = i;
+			iSavePrev[i] = iSaveCurrent[iVecIter - iSavePast.begin()];
+
 		}
-		
 	}
 	std::cout << iSavePast.size() << endl;
 
@@ -59,6 +65,7 @@ int main() {
 		//cout << iSaveVec[iMaxPos] << " ";
 		iTemp.push_back(iSaveVec[iMaxPos]);
 		iMaxPos = iSavePrev[iMaxPos];
+
 	}
 
 	for (int i = iTemp.size() - 1; i >= 0; i--) {
