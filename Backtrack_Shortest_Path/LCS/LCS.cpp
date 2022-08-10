@@ -8,8 +8,12 @@ using namespace std;
 int iNum;
 string sFirst;
 string sSecond;
+int iSaveList[1001][1001];
 
 void Solve() {
+
+	
+
 
 }
 
