@@ -9,6 +9,7 @@ int iNum;
 string sFirst;
 string sSecond;
 int iSaveList[1001][1001];
+vector<int> iStorePos;
 
 void Solve() {
 
@@ -19,11 +20,11 @@ void Solve() {
 
 			if (sFirst[i-1] == sSecond[j-1]) {
 				iSaveList[i][j] = iSaveList[i - 1][j - 1] + 1;
+				iStorePos.push_back(i);
 			}
 			else {
 				iSaveList[i][j] = max(iSaveList[i][j - 1], iSaveList[i-1][j]);
 			}
-
 
 		}
 	}
@@ -39,6 +40,32 @@ int main() {
 	cin >> sSecond;
 	Solve();
 	cout << iSaveList[sFirst.size()][sSecond.size()] << endl;
+	//for (int i = 0; i < iStorePos.size(); i++) {
+	//	cout << sFirst[iStorePos[i]] << " ";
+	//}
+	int iPos = sFirst.size();
+	int jPos = sSecond.size();
+	while (iSaveList[iPos][jPos] > 0) {
+
+		
+		if (iSaveList[iPos][jPos] == iSaveList[iPos][jPos - 1] ) {
+			jPos--;
+		}
+		else if (iSaveList[iPos][jPos] == iSaveList[iPos - 1][jPos]) {
+			iPos--;
+		}
+		else if (iSaveList[iPos][jPos] == iSaveList[iPos-1][jPos - 1] + 1) {
+			cout << sFirst[iPos - 1];
+			iPos--;
+			jPos--;
+			
+		}
+
+		if (iPos == 0 || jPos == 0) break;
+		
+
+
+	}
 
 
 
