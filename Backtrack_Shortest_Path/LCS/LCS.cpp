@@ -123,14 +123,9 @@ int main() {
 	cin >> sSecond;
 	Solve();
 	cout << iSaveList[sFirst.size()][sSecond.size()] << endl;
-	//for (int i = 0; i < iStorePos.size(); i++) {
-	//	cout << sFirst[iStorePos[i]] << " ";
-	//}
 	int iPos = sFirst.size();
 	int jPos = sSecond.size();
 	while (iSaveList[iPos][jPos] > 0) {
-
-		
 		if (iSaveList[iPos][jPos] == iSaveList[iPos][jPos - 1] ) {
 			jPos--;
 		}
@@ -138,25 +133,16 @@ int main() {
 			iPos--;
 		}
 		else if (iSaveList[iPos][jPos] == iSaveList[iPos-1][jPos - 1] + 1) {
-			//cout << sFirst[iPos - 1];
 			sStore += sFirst[iPos - 1];
 			iPos--;
 			jPos--;
 			
 		}
-
 		if (iPos == 0 || jPos == 0) break;
-
-
 	}
-
 	for (int i = sStore.size() - 1; i >= 0; i--) {
 		cout << sStore[i];
 	}
-
-
-
-
 	return 0;
 }
 
