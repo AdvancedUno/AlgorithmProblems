@@ -1,24 +1,19 @@
-<<<<<<< HEAD
+
 ﻿#include <iostream>
 #include<vector>
 #include<math.h>
 #include<algorithm>
 #include <string.h>
 #include <queue>
-
 using namespace std;
-
 int iFirst;
 int iSecond;
 int iVisited[100001];
-
-
 bool valid(int iPos) {
 	if (iPos < 0 || iPos > 100000 || iVisited[iPos] > 0)
 		return false;
 	return true;
 }
-
 int Solve(queue<pair<int, int>> qOperation) {
 	
 	while (!qOperation.empty()) {
@@ -164,4 +159,4 @@ int main() {
 
 	return 0;
 }
->>>>>>> 2edfe8a066be460775d5cffb5bc8a5509d5289dd
+
