@@ -11,8 +11,6 @@ using namespace std;
 vector<int> childTree[100001];
 int visited[100001];
 int parent[100001];
-
-
 int N;
 
 
