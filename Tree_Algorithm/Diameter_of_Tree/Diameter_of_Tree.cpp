@@ -9,11 +9,34 @@ using namespace std;
 
 vector<pair<int, int>> childTree[100001];
 int visited[100001];
-int parent[100001];
+int iCostSave[100001];
 int N;
+int maxWeight = 0;
+int maxPos;
 
 
-void DFS() {
+void DFS(int node) {
+
+
+
+	for (int i = 0; i < childTree[node].size(); i++) {
+		int nextNode = childTree[node][i].first;
+		int iWeight = childTree[node][i].second;
+
+		if (visited[nextNode] == true) {
+			continue;
+		}
+		visited[nextNode] = true;
+
+		iCostSave[nextNode] = iCostSave[node] + iWeight;
+		if (iCostSave[nextNode] > maxWeight) {
+			maxWeight = iCostSave[nextNode];
+			maxPos = nextNode;
+		}
+
+		DFS(nextNode);
+
+	}
 
 }
 
@@ -40,10 +63,21 @@ int main() {
 	}
 
 
+	visited[1] = true;
+
+	DFS(1);
 
 
-	for (int i = 1; i <= N; i++) {
-		cout << childTree[i].front().first << "\n";
+	for (int i = 0; i <= N; i++) {
+		visited[i] = false; 
+		iCostSave[i] = 0;
+		maxWeight = 0;
 	}
+	visited[maxPos] = true;
+	DFS(maxPos);
+
+	cout << maxWeight << endl;
+	//cout << maxPos << endl;
+
 
 }
