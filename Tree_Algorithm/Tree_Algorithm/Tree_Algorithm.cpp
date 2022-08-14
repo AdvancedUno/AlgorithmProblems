@@ -8,30 +8,14 @@
 
 using namespace std;
 
-vector<int> childTree[100001];
+vector<pair<int, int>> childTree[100001];
 int visited[100001];
 int parent[100001];
 int N;
 
 
-void Solve() {
-	queue<int> qSave;
-	qSave.push(1);
-	visited[1] = true;
-
-	while (!qSave.empty()) {
-		int root = qSave.front();
-		qSave.pop();
-
-		for (int i = 0; i < childTree[root].size(); i++) {
-			int child = childTree[root][i];
-			if (!visited[child]) {
-				qSave.push(child);
-				parent[child] = root;
-				visited[child] = true;
-			}
-		}
-	}
+void BFS() {
+	
 }
 
 
@@ -43,18 +27,23 @@ int main() {
 
 	cin >> N;
 
-	for (int i = 0; i < N - 1; i++) {
+	for (int i = 0; i < N; i++) {
 		int temp1;
 		int temp2;
-		cin >> temp1 >> temp2;
-		childTree[temp1].push_back(temp2);
-		childTree[temp2].push_back(temp1);
+		int iWeight;
+		cin >> temp1;
+		while (true) {
+			cin >> temp2;
+			if (temp2 == -1)break;
+			cin >> iWeight;
+			childTree[temp1].push_back(make_pair(temp2, iWeight));
+		}
 	}
 
-	Solve();
+	
 
-	for (int i = 2; i <= N; i++) {
-		cout << parent[i] << "\n";
+	for (int i = 1; i <= N; i++) {
+		cout << childTree[i].front().first << "\n";
 	}
 
 }
