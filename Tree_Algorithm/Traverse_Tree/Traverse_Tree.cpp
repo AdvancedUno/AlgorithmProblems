@@ -57,18 +57,15 @@ int main() {
 	cin.tie(0);
 	std::cout.tie(0);
 	cin >> N;
-
 	char rootNode, leftNode, rightNode;
 	for (int i = 0; i < N ; i++) {
 		cin >> rootNode >> leftNode >> rightNode;
 		nodeSave[rootNode - 65][0] = leftNode - 65;
 		nodeSave[rootNode - 65][1] = rightNode - 65;
 	}
-
 	PreOrder(0);
-	cout << "\n";
+	printf("\n");
 	InOrder(0);
-	cout << "\n";
+	printf("\n");
 	PostOrder(0);
-
 }
