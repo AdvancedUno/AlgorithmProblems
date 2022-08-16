@@ -11,7 +11,7 @@ string sSecond;
 int iSaveList[1001][1001];
 string sStore = "";
 
-void Solve() {
+void LCS() {
 
 	
 
@@ -38,7 +38,7 @@ int main() {
 	std::cout.tie(0);
 	cin >> sFirst;
 	cin >> sSecond;
-	Solve();
+	LCS();
 	cout << iSaveList[sFirst.size()][sSecond.size()] << endl;
 	//for (int i = 0; i < iStorePos.size(); i++) {
 	//	cout << sFirst[iStorePos[i]] << " ";
