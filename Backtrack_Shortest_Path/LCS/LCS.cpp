@@ -65,7 +65,7 @@ string sSecond;
 int iSaveList[1001][1001];
 string sStore = "";
 
-void Solve() {
+void LCS() {
 
 	
 
@@ -121,7 +121,7 @@ int main() {
 =======
 	cin >> sFirst;
 	cin >> sSecond;
-	Solve();
+	LCS();
 	cout << iSaveList[sFirst.size()][sSecond.size()] << endl;
 	int iPos = sFirst.size();
 	int jPos = sSecond.size();
